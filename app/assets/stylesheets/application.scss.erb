@@ -1,0 +1,119 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ *= require bootstrap
+ */
+
+ $primary-green: #16a085;
+ $muted: #aaa;
+
+ @font-face {
+    font-family: 'PT Sans';
+    src: url('<%= asset_path('ptsanscaption_regular_macroman/PTC55F-webfont.eot')%>');
+    src: url('<%= asset_path('ptsanscaption_regular_macroman/PTC55F-webfont.eot?#iefix')%>') format('embedded-opentype'),
+         url('<%= asset_path('ptsanscaption_regular_macroman/PTC55F-webfont.woff')%>') format('woff'),
+         url('<%= asset_path('ptsanscaption_regular_macroman/PTC55F-webfont.ttf')%>') format('truetype'),
+         url('<%= asset_path('ptsanscaption_regular_macroman/PTC55F-webfont.svg#pt_sans_captionregular')%>') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+
+}
+
+
+
+
+body{
+	padding-top: 60px;
+	background-image: url('<%= asset_path('content_inner_bg.png') %>');
+	font-family: 'PT Sans', Helvetica, Arial, ans-serif !important;
+}
+
+.qts{
+    a:link, a:hover, a:active, a:visited{
+        color: $primary-green;
+        background-color:transparent;
+    }
+    a:hover{
+        text-decoration: underline;
+    }
+    a.text-muted:link, a.text-muted:hover, a.text-muted:active, a.text-muted:visited{
+        color: $muted;
+    }
+}
+
+p{
+	font-family: 'PT Sans', Helvetica, Arial, ans-serif !important;	
+}
+
+.qts{
+    	h1{
+        margin-top: 0px;
+    }
+    blockquote{
+        border:0;
+        padding:18px 0 0 20px;
+        margin: 0;
+        position: relative;
+    }
+}
+
+.container-full{
+    widows: 100%;
+    text-align: center;
+    padding:125px 0;
+}
+
+.banner{
+    background-image: url('<%= asset_path('blurry-bg.jpg') %>');
+    background-size:cover;
+    color: #fff;
+}
+.navbar.navbar-fixed-top{
+    background-color:#fff;
+    border-bottom: 1px solid #eee;
+}
+
+.navbar-toggle .icon-bar{
+    background: $primary-green;
+}
+
+.quote_media{
+    max-width: 100%;
+    margin-bottom: 15px;
+}
+
+blockquote:before{
+    content:'"';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-size: 70px;
+    color: #ddd;
+    line-height: 50px;
+}
+
+.pagination{
+    ul{
+        list-style-type: none;
+        li{
+            display: inline-block;
+            padding-right: 10px;
+        }
+    }
+}
+
+#at4-follow{
+    top:64px;
+}

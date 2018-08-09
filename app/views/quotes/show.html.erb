@@ -1,0 +1,59 @@
+<div class='row'>
+
+	<div class="col-md-8">
+		<div class="panel panel-default">
+			<div class="panel-body">
+						
+				<% if @quote.youtube_video_id %>
+					<iframe width="420" height="315" src="https://www.youtube.com/embed/<%= @quote.youtube_video_id %>" frameborder="0" allowfullscreen class='quote_media'></iframe>
+				<% end %>
+
+				<% if @quote.image_url %>
+					<%= image_tag @quote.image_url, {class: "quote_media"} %>
+				<% end %>
+					<blockquote>
+					<p>
+						<%= @quote.quote %> - <%= link_to @quote.author.name, quotes_by_author_name_path( @quote.author ) %>
+						<br />
+					</p>
+				</blockquote>
+			</div>
+
+			<div class="panel-footer">
+				<div class='row'>
+					<div class='col-md-7'>
+						<% @quote.tags.each do | tag | %>
+							<%=link_to(tag.name, quotes_by_tag_name_path(tag.name))%>
+						<% end %> 	
+					</div>
+					<div class='col-md-5 text-right'>
+						<!-- TODO: add tags as hash tags to the data-title -->
+						<% if Rails.env.development? %>
+							<div class="addthis_sharing_toolbox"
+							data-url='<%= "http://#{request.host}:#{request.port}#{quote_path(@quote)}" %>'
+							data-title='<%= @quote.quote %>'></div>
+						<% else %>
+
+						<div class="addthis_sharing_toolbox"
+							data-url='<%= "http://#{request.host}#{quote_path(@quote)}" %>'
+							data-title='<%= @quote.quote %>'></div>
+
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class='col-md-4'>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- QE: -->
+		<ins class="adsbygoogle"
+		     style="display:inline-block;width:300px;height:250px"
+		     data-ad-client="ca-pub-4629001980480125"
+		     data-ad-slot="2661263931"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+</div>

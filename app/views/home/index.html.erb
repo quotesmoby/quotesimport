@@ -1,0 +1,61 @@
+<% Quote.all.limit(10).each_slice(2) do |quotes| %>
+	<div class="row">
+		<% quotes.each do |quote| %>
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<p>
+							"<%= quote.quote %>"<br />
+							- <%= link_to quote.author.name, quotes_by_author_name_path(quote.author) %>
+						</p>
+
+						<p class='text-right'>
+							<%= link_to "Permalink", quote_path( quote ), {class:'text-muted'} %>
+						</p>
+					</div>
+					<div class="panel-footer">
+						<div class='row'>
+							<div class='col-md-7'>
+								<% quote.tags.each do | tag | %>
+									<%= link_to(tag.name, quotes_by_tag_name_path(tag.name))  %>
+								<% end %> 
+							</div>
+							<div class='col-md-5 text-right'>
+								<!-- TODO: add tags as hash tags to the data-title -->
+								<% if Rails.env.development? %>
+									<div class="addthis_sharing_toolbox"
+									data-url='<%= "http://#{request.host}:#{request.port}#{quote_path(quote)}" %>'
+									data-title='<%= quote.quote %>'></div>
+								<% else %>
+
+								<div class="addthis_sharing_toolbox"
+									data-url='<%= "http://#{request.host}#{quote_path(quote)}" %>'
+									data-title='<%= quote.quote %>'></div>
+
+								<% end %>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		<% end %>
+	</div>
+<% end %>
+
+<% if is_mobile.blank? %>
+<div class='row'>
+	<div class='col-md-12'>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- QE: Sky below main content -->
+		<ins class="adsbygoogle"
+		     style="display:inline-block;width:728px;height:90px"
+		     data-ad-client="ca-pub-4629001980480125"
+		     data-ad-slot="5246947131"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+</div>
+
+<% end %>

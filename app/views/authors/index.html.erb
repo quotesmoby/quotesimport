@@ -1,0 +1,18 @@
+<h1>Authors</h1>
+
+<%= alphabetical_paginate @alphaParams %>
+
+<div id="pagination_table">
+<% @authors.each do |author| %>
+  <%= link_to author.name, quotes_by_author_name_path(author) %><br />
+<% end %>
+</div>
+
+<%= will_paginate @authors %>
+
+
+
+<% if current_user %>
+	<br />
+  <%=  link_to 'New Author', new_author_path %>
+<% end %>

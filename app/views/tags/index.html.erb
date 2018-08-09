@@ -1,0 +1,17 @@
+<h1>Categories</h1>
+
+
+<%= alphabetical_paginate @alphaParams %>
+
+<div id="pagination_table">
+	<% @tags.order(:name).each do |tag| %>
+	    <%= link_to tag.name, quotes_by_tag_name_path(tag.name) %><br />
+	<% end %>
+</div>
+
+<%= will_paginate @tags %>
+
+<br>
+<% if current_user %>
+  <%= link_to 'New Tag', new_tag_path %>
+<% end %>

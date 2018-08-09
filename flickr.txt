@@ -1,0 +1,7 @@
+key
+6c5f5b8cdf3e3ac9941a97d33b91d8be
+secret
+a335e4875cbbd355
+
+
+https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=6c5f5b8cdf3e3ac9941a97d33b91d8be&tags=dogs&safe_search=2&media=photos&format=json&extras=url_c

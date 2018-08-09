@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    <% if defined? @pageTitle %>
+      <%= @pageTitle %>
+    <% else %>
+      QuoteEstate - Famous and easy to share quotes
+    <% end %>
+
+  </title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="p:domain_verify" content="bc7f3c0f57fb1061232f92c8c670daf7"/>
+  <meta name="verifyownership" content="91c1184f779d3b021c43939bdc164447" />
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application', async: 'true' %>
+  <%= csrf_meta_tags %>
+</head>
+<body class='qts'>
+
+
+ <nav class="navbar navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand" href="/">
+        <%= image_tag "quote-estate-logo.png" %>
+      </a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class='active'>
+          <%= link_to "Quotes", :quotes %>
+        </li>
+        <li>
+          <%= link_to "Authors", :authors %>
+        </li>
+        <li>
+          <%= link_to "Categories", :tags %>
+        </li>
+        <li>
+          <% if current_user %>
+            <%= link_to "Logout", :destroy_user_session, method: :delete %>
+          <% end %>
+        </li>
+      </ul>
+
+
+      <% if params[:controller] != 'home' %>
+
+          <%= form_tag('/search/post', {method: "post", class: "navbar-form navbar-right"}) do %>
+              <%= text_field_tag(:query, '', {class: "form-control input-md", placeholder: "Search"} ) %>
+            <% end %>
+      <% end %>
+
+
+
+      <% if current_user %>
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+
+              <li>
+                <%= link_to "Quotes", :quotes %>
+              </li>
+              <li>
+                <%= link_to " - New quote", :new_quote %>
+              </li>
+
+              <li>
+                <%= link_to "Authors", :authors %>
+              </li>
+              <li>
+                <%= link_to " - New author", :new_author %>
+              </li>
+
+              <li>
+                <%= link_to "Tags", :tags %>
+              </li>
+              <li>
+                <%= link_to " - New tag", :new_tag %>
+              </li>
+
+            </ul>
+          </li>
+        </ul>
+        <% end %>
+
+    </div><!-- /.nav-collapse -->
+  </div><!-- /.container -->
+</nav><!-- /.navbar -->
+
+<% if current_page?(root_path) %>
+  <section class='container-full banner'>
+
+    <div class='container'>
+      <div class='row'>
+        <p>Search by quote category or person.</p>
+
+        <div class='col-md-6 col-md-offset-3'>
+            <%= form_tag('/search/post', {method: "post", class: "input-group"}) do %>
+              <%= text_field_tag(:query, '', {class: "form-control input-lg", placeholder: "Person or category"} ) %>
+              <span class="input-group-btn">
+                <button class="btn btn-default input-lg" type="button">Search</button>
+              </span>
+            <% end %>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+  <% end %>
+
+<div class="container">
+
+  <div class='row'>
+    <div class='col-md-12'>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+     </div>
+  </div> 
+
+  <div class="row row-offcanvas row-offcanvas-right">
+
+    <!-- Sidebar -->
+    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+
+      <h4>Popular Categories</h4>
+      <% Tag.popularTags.each do |tag| %>
+        <%= link_to  tag.name.capitalize, quotes_by_tag_name_path(tag.name) %><br />
+      <% end %>
+
+      <h4>Popular Authors</h4>
+      <% Author.popularAuthors.each do |author| %>
+        <%= link_to  author.name, quotes_by_author_name_path(author) %><br />
+      <% end %>
+      
+      <% if is_mobile.blank? %>
+      <!--
+      Removing until i can put in something more responsive
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-4629001980480125"
+             data-ad-slot="8060812733"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      -->
+      <% end %>
+
+    </div><!--/.sidebar-offcanvas-->
+
+
+    <!-- Main content -->
+    <div class="col-xs-12 col-sm-9">
+      
+      <%= yield %>
+
+    </div><!--/.col-xs-12.col-sm-9-->
+
+  </div><!--/row-->
+
+    <% if @show_comments && @show_comments %>
+
+    <div class='row'>
+      <div class='col-sm-9 col-sm-offset-3'>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+            var disqus_shortname = 'quoteestate';
+            
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+      </div>
+    </div>
+
+    <% end %>
+
+
+
+  <hr>
+
+  <footer>
+    <p>QuoteEstate&copy; 2015</p>
+  </footer>
+
+</div><!--/.container-->
+
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5541369b7de5a88d" async="async"></script>
+
+<% if !Rails.env.development? %>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-62519207-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+<% end %>
+
+
+</body>
+</html>

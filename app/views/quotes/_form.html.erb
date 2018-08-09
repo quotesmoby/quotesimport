@@ -1,0 +1,47 @@
+<%= form_for(@quote) do |f| %>
+  <% if @quote.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@quote.errors.count, "error") %> prohibited this quote from being saved:</h2>
+
+      <ul>
+      <% @quote.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :quote %><br>
+    <%= f.text_area :quote %>
+  </div>
+  <div class="field">
+    <%= f.label :author %><br>
+    <%= f.select :author_id, options_for_select(Author.all.map{|s|[s.name, s.id]}) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :tags %><br>
+    <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :image_url %><br>
+    <%= f.text_field :image_url%>
+  </div>
+
+  <div class="field">
+    <%= f.label :video_url %><br>
+    <%= f.text_field :video_url%>
+  </div>
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+
+
+
